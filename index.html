@@ -73,7 +73,8 @@ body{
 .photo:hover{transform:rotate(-1deg) scale(1.03)}
 .photo:focus-visible{outline:3px solid var(--sun); outline-offset:3px}
 .photo img{display:block; width:100%; height:100%; object-fit:cover; object-position:50% 92%}
-.lightbox{position:fixed; inset:0; z-index:30; background:rgba(10,22,19,.88); display:flex; align-items:center; justify-content:center;
+.lightbox.on{display:flex}
+.lightbox{position:fixed; inset:0; z-index:30; background:rgba(10,22,19,.88); display:none; align-items:center; justify-content:center;
   padding:20px; box-sizing:border-box; cursor:zoom-out; border:0}
 .lightbox img{max-width:100%; max-height:100%; border:8px solid #fff; box-sizing:border-box; box-shadow:0 20px 50px rgba(0,0,0,.5)}
 .leaf{position:absolute; inset:0; transform-style:preserve-3d; transform-origin:50% 0;
@@ -196,8 +197,8 @@ canvas{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-
   stage.addEventListener('click',function(e){ if(!opened && !e.target.closest('#card')) open(); });
   again.addEventListener('click',close);
   var photo=document.getElementById('photo'), lb=document.getElementById('lightbox');
-  photo.addEventListener('click',function(){ lb.firstChild.src=photo.firstChild.src; lb.hidden=false; lb.focus(); });
-  lb.addEventListener('click',function(){ lb.hidden=true; photo.focus({preventScroll:true}); });
+  photo.addEventListener('click',function(){ lb.firstChild.src=photo.firstChild.src; lb.hidden=false; lb.classList.add('on'); lb.focus(); });
+  lb.addEventListener('click',function(){ lb.hidden=true; lb.classList.remove('on'); photo.focus({preventScroll:true}); });
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!lb.hidden) lb.click(); });
 
   // confetti
